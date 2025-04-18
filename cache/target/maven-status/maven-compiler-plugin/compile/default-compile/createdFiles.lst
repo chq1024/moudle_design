@@ -1,0 +1,6 @@
+com\beikei\design\bean\NativeCache.class
+com\beikei\design\Main.class
+com\beikei\design\bean\DemoController.class
+com\beikei\design\bean\CaffeineCacheAccessor.class
+com\beikei\design\bean\MyRedisCodec.class
+com\beikei\design\bean\CacheConfiguration.class
