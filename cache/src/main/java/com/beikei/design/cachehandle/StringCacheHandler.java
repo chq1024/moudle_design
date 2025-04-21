@@ -4,7 +4,7 @@ import io.lettuce.core.api.sync.RedisCommands;
 
 public class StringCacheHandler implements CacheHandler<String, Object>{
     private final RedisCommands<String,Object> commands;
-    public StringCacheHandler(RedisCommands<String, Object> commands) {
+    protected StringCacheHandler(RedisCommands<String, Object> commands) {
         this.commands = commands;
     }
 
@@ -14,7 +14,10 @@ public class StringCacheHandler implements CacheHandler<String, Object>{
     }
 
     @Override
-    public Object put(String key, Object value) {
-        return commands.set(key,value);
+    public Object put(String key, Object value,Long expire) {
+        if (expire == -1) {
+            return commands.set(key, value);
+        }
+        return commands.setex(key,expire,value);
     }
 }

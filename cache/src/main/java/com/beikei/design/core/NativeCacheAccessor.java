@@ -1,15 +1,15 @@
-package com.beikei.design.bean;
+package com.beikei.design.core;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import io.lettuce.core.support.caching.CacheAccessor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CaffeineCacheAccessor implements CacheAccessor<String,Object> {
+public class NativeCacheAccessor implements CacheAccessor<String,Object> {
 
-    private Cache<String,Object> cache;
+    private final Cache<String,Object> cache;
 
-    public CaffeineCacheAccessor(Cache<String,Object> cache) {
+    public NativeCacheAccessor(Cache<String,Object> cache) {
         this.cache = cache;
     }
 

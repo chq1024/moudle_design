@@ -4,12 +4,14 @@ import io.lettuce.core.api.sync.RedisCommands;
 
 import java.util.List;
 
-public class ListCacheHandler implements CacheHandler<String,Object>{
+public class ListCacheHandler implements CacheHandler<String, Object> {
 
-    private final RedisCommands<String,Object> redisCommands;
-    public ListCacheHandler(RedisCommands<String,Object> redisCommands) {
+    private final RedisCommands<String, Object> redisCommands;
+
+    protected ListCacheHandler(RedisCommands<String, Object> redisCommands) {
         this.redisCommands = redisCommands;
     }
+
     @Override
     public Object get(String key) {
         List<Object> valueList = redisCommands.lrange(key, 0, -1);
@@ -20,7 +22,11 @@ public class ListCacheHandler implements CacheHandler<String,Object>{
     }
 
     @Override
-    public Object put(String key, Object value) {
-        return redisCommands.lpush(key,value);
+    public Object put(String key, Object value, Long expireTime) {
+        Long callback = redisCommands.lpush(key, value);
+        if (expireTime != -1) {
+            redisCommands.expire(key, expireTime);
+        }
+        return callback;
     }
 }

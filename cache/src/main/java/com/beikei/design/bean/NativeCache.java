@@ -2,6 +2,7 @@ package com.beikei.design.bean;
 
 import com.beikei.design.core.MyClientCacheFrontend;
 import com.beikei.design.core.MyRedisCodec;
+import com.beikei.design.core.NativeCacheAccessor;
 import com.github.benmanes.caffeine.cache.Cache;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.TrackingArgs;
@@ -44,7 +45,7 @@ public class NativeCache {
         }
         try {
             redisConnection = redisClient.connect(new MyRedisCodec());
-            this.frontend = MyClientCacheFrontend.enable(new CaffeineCacheAccessor(cache), redisConnection, TrackingArgs.Builder.enabled());
+            this.frontend = MyClientCacheFrontend.enable(new NativeCacheAccessor(cache), redisConnection, TrackingArgs.Builder.enabled());
             log.info("contention had been reconnect....");
         } catch (Exception e) {
             log.error("connection had been disconnected,waiting reconnect....");

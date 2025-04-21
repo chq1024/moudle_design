@@ -1,22 +1,8 @@
-/*
- * Copyright 2020-2022 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.beikei.design.core;
 
 import com.beikei.design.bean.CacheEnum;
 import com.beikei.design.cachehandle.CacheHandler;
+import com.beikei.design.cachehandle.CacheHandlerFactory;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.codec.RedisCodec;
@@ -37,19 +23,19 @@ class MyRedisCache implements RedisCache<String, Object> {
 
     @Override
     public Object get(String key) {
-        RedisCommands<String, Object> commands = connection.sync();
-        CacheHandler<String,Object> cacheHandler = CacheEnum.match(key,commands);
+        CacheHandler<String, Object> cacheHandler = matchHandlerByKey(key);
         return cacheHandler.get(key);
     }
 
     @Override
     public void put(String key, Object value) {
-        RedisCommands<String, Object> commands = connection.sync();
-        CacheHandler<String,Object> cacheHandler = CacheEnum.match(key,commands);
-        cacheHandler.put(key,value);
+        CacheEnum cacheEnum = CacheEnum.match(key);
+        CacheHandler<String, Object> cacheHandler = matchHandlerByEnum(cacheEnum);
+        cacheHandler.put(key,value,CacheEnum.match(key).getExpireTime());
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void addInvalidationListener(java.util.function.Consumer<? super String> listener) {
         connection.addListener(message -> {
             if (message.getType().equals("invalidate")) {
@@ -63,6 +49,16 @@ class MyRedisCache implements RedisCache<String, Object> {
     @Override
     public void close() {
         connection.close();
+    }
+
+    private CacheHandler<String,Object> matchHandlerByKey(String key) {
+        CacheEnum cacheEnum = CacheEnum.match(key);
+        return matchHandlerByEnum(cacheEnum);
+    }
+
+    private CacheHandler<String,Object> matchHandlerByEnum(CacheEnum cacheEnum) {
+        RedisCommands<String, Object> commands = connection.sync();
+        return CacheHandlerFactory.getHandler(cacheEnum.getClazz(), commands);
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class MapCacheHandler implements CacheHandler<String,Object>{
     private final RedisCommands<String,Object> commands;
-    public MapCacheHandler(RedisCommands<String, Object> commands) {
+    protected MapCacheHandler(RedisCommands<String, Object> commands) {
         this.commands = commands;
     }
 
@@ -21,7 +21,11 @@ public class MapCacheHandler implements CacheHandler<String,Object>{
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object put(String key, Object value) {
-        return commands.hmset(key, (Map<String, Object>) value);
+    public Object put(String key, Object value, Long expire) {
+        String callback = commands.hmset(key, (Map<String, Object>) value);
+        if (expire != -1) {
+            commands.expire(key,expire);
+        }
+        return callback;
     }
 }

@@ -1,5 +1,7 @@
-package com.beikei.design.bean;
+package com.beikei.design.controller;
 
+import com.beikei.design.bean.CacheEnum;
+import com.beikei.design.bean.NativeCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,8 @@ public class DemoController {
 //        Object val = redisTemplate.opsForValue().get(key);
 //        Object val = nativeCache.get(key);
         Object val = nativeCache.get(key,()->{
-            Class<?> clazz = CacheEnum.typeOfKey(key);
+            CacheEnum cacheEnum = CacheEnum.match(key);
+            Class<?> clazz = cacheEnum.getClazz();
             if (clazz.equals(String.class)) {
                 return UUID.randomUUID().toString();
             } else if (clazz.equals(List.class)) {

@@ -2,6 +2,10 @@ package com.beikei.design.cachehandle;
 
 public interface CacheHandler<K, V> {
     V get(K key);
+    V put(K key,V value,Long expire);
 
-    V put(K key, V value);
+    default V put(K key, V value) {
+        return put(key,value,-1L);
+    }
+
 }
