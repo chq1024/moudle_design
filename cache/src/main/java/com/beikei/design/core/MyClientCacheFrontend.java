@@ -13,12 +13,12 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-public class MyClientSideCaching implements CacheFrontend<String, Object> {
+public class MyClientCacheFrontend implements CacheFrontend<String, Object> {
     private final CacheAccessor<String, Object> cacheAccessor;
     private final RedisCache<String, Object> redisCache;
     private final List<Consumer<String>> invalidationListeners = new CopyOnWriteArrayList<>();
 
-    private MyClientSideCaching(CacheAccessor<String, Object> cacheAccessor, RedisCache<String, Object> redisCache) {
+    private MyClientCacheFrontend(CacheAccessor<String, Object> cacheAccessor, RedisCache<String, Object> redisCache) {
         this.cacheAccessor = cacheAccessor;
         this.redisCache = redisCache;
     }
@@ -36,10 +36,14 @@ public class MyClientSideCaching implements CacheFrontend<String, Object> {
     }
 
     private static CacheFrontend<String, Object> create(CacheAccessor<String, Object> cacheAccessor, RedisCache<String, Object> redisCache) {
-        MyClientSideCaching caching = new MyClientSideCaching(cacheAccessor, redisCache);
-        caching.addInvalidationListener(cacheAccessor::evict);
-        redisCache.addInvalidationListener(caching::notifyInvalidate);
-        return caching;
+        MyClientCacheFrontend cacheFrontend = new MyClientCacheFrontend(cacheAccessor, redisCache);
+        cacheFrontend.addInvalidationListener(cacheAccessor::evict);
+        redisCache.addInvalidationListener(cacheFrontend::notifyInvalidate);
+        return cacheFrontend;
+    }
+
+    public void addInvalidationListener(java.util.function.Consumer<String> invalidationListener) {
+        invalidationListeners.add(invalidationListener);
     }
 
     private void notifyInvalidate(String key) {
@@ -53,9 +57,6 @@ public class MyClientSideCaching implements CacheFrontend<String, Object> {
         redisCache.close();
     }
 
-    public void addInvalidationListener(java.util.function.Consumer<String> invalidationListener) {
-        invalidationListeners.add(invalidationListener);
-    }
 
     @Override
     public Object get(String key) {
@@ -72,7 +73,6 @@ public class MyClientSideCaching implements CacheFrontend<String, Object> {
 
     @Override
     public Object get(String key, Callable<Object> valueLoader) {
-
         Object value = cacheAccessor.get(key);
         if (value == null) {
             value = redisCache.get(key);
@@ -80,12 +80,10 @@ public class MyClientSideCaching implements CacheFrontend<String, Object> {
                 try {
                     value = valueLoader.call();
                 } catch (Exception e) {
-                    throw new ValueRetrievalException(
-                            String.format("Value loader %s failed with an exception for key %s", valueLoader, key), e);
+                    throw new ValueRetrievalException(String.format("Value loader %s failed with an exception for key %s", valueLoader, key), e);
                 }
                 if (value == null) {
-                    throw new ValueRetrievalException(
-                            String.format("Value loader %s returned a null value for key %s", valueLoader, key));
+                    throw new ValueRetrievalException(String.format("Value loader %s returned a null value for key %s", valueLoader, key));
                 }
                 redisCache.put(key, value);
                 // register interest in key

@@ -38,4 +38,12 @@ public enum CacheEnum {
         }
         return new StringCacheHandler(commands);
     }
+
+    public static Class<?> typeOfKey(String key) {
+        CacheEnum cacheEnum = Arrays.stream(values()).filter(r -> r.getKey().equals(key)).findAny().orElse(null);
+        if (cacheEnum == null) {
+            throw new RuntimeException("未配置Key的枚举类");
+        }
+        return cacheEnum.getClazz();
+    }
 }
