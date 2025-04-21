@@ -31,7 +31,7 @@ class MyRedisCache implements RedisCache<String, Object> {
     public void put(String key, Object value) {
         CacheEnum cacheEnum = CacheEnum.match(key);
         CacheHandler<String, Object> cacheHandler = matchHandlerByEnum(cacheEnum);
-        cacheHandler.put(key,value,CacheEnum.match(key).getExpireTime());
+        cacheHandler.put(key,value,cacheEnum.getExpireTime());
     }
 
     @Override
