@@ -1,0 +1,14 @@
+/cache/target/
+.iml
+.idea/
+.DS_Store
+.classpath
+.project
+.settings/
+.checkstyle
+.checkstyle.xml
+.checkstyle-result.xml
+.checkstyle-result.json
+.checkstyle-result.html
+.checkstyle-result.txt
+.checkstyle-result.json.

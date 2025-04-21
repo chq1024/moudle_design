@@ -12,7 +12,11 @@ public class MapCacheHandler implements CacheHandler<String,Object>{
 
     @Override
     public Object get(String key) {
-        return commands.hgetall(key);
+        Map<String, Object> valueMp = commands.hgetall(key);
+        if (valueMp == null || valueMp.isEmpty()) {
+            return null;
+        }
+        return valueMp;
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.beikei.design.cachehandle;
 
 import io.lettuce.core.api.sync.RedisCommands;
 
+import java.util.List;
+
 public class ListCacheHandler implements CacheHandler<String,Object>{
 
     private final RedisCommands<String,Object> redisCommands;
@@ -10,7 +12,11 @@ public class ListCacheHandler implements CacheHandler<String,Object>{
     }
     @Override
     public Object get(String key) {
-        return redisCommands.lrange(key,0,-1);
+        List<Object> valueList = redisCommands.lrange(key, 0, -1);
+        if (valueList == null || valueList.isEmpty()) {
+            return null;
+        }
+        return valueList;
     }
 
     @Override

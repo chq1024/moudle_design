@@ -2,7 +2,11 @@ package com.beikei.design.bean;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.benmanes.caffeine.cache.RemovalListener;
 import io.lettuce.core.RedisClient;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +21,7 @@ import java.time.Duration;
 
 
 @Configuration
+@Slf4j
 public class CacheConfiguration {
 
     @Bean
@@ -33,7 +38,9 @@ public class CacheConfiguration {
     @Qualifier("cache")
     public Cache<String,Object> cache() {
         return Caffeine.newBuilder()
-                .expireAfterWrite(Duration.ofMinutes(5))
+                .expireAfterWrite(Duration.ofSeconds(30))
+                .expireAfterAccess(Duration.ofMinutes(1))
+                .removalListener((key, value, cause) -> log.warn("Rm:key:{},value:{},cause:{}", key, value, cause.name()))
                 .initialCapacity(100)
                 .maximumSize(1000)
                 .build();
