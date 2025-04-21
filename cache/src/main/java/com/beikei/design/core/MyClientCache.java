@@ -13,12 +13,12 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
-public class MyClientCacheFrontend implements CacheFrontend<String, Object> {
+public class MyClientCache implements CacheFrontend<String, Object> {
     private final CacheAccessor<String, Object> cacheAccessor;
     private final RedisCache<String, Object> redisCache;
     private final List<Consumer<String>> invalidationListeners = new CopyOnWriteArrayList<>();
 
-    private MyClientCacheFrontend(CacheAccessor<String, Object> cacheAccessor, RedisCache<String, Object> redisCache) {
+    private MyClientCache(CacheAccessor<String, Object> cacheAccessor, RedisCache<String, Object> redisCache) {
         this.cacheAccessor = cacheAccessor;
         this.redisCache = redisCache;
     }
@@ -36,7 +36,7 @@ public class MyClientCacheFrontend implements CacheFrontend<String, Object> {
     }
 
     private static CacheFrontend<String, Object> create(CacheAccessor<String, Object> cacheAccessor, RedisCache<String, Object> redisCache) {
-        MyClientCacheFrontend cacheFrontend = new MyClientCacheFrontend(cacheAccessor, redisCache);
+        MyClientCache cacheFrontend = new MyClientCache(cacheAccessor, redisCache);
         cacheFrontend.addInvalidationListener(cacheAccessor::evict);
         redisCache.addInvalidationListener(cacheFrontend::notifyInvalidate);
         return cacheFrontend;

@@ -1,6 +1,6 @@
 package com.beikei.design.bean;
 
-import com.beikei.design.core.MyClientCacheFrontend;
+import com.beikei.design.core.MyClientCache;
 import com.beikei.design.core.MyRedisCodec;
 import com.beikei.design.core.NativeCacheAccessor;
 import com.github.benmanes.caffeine.cache.Cache;
@@ -17,7 +17,7 @@ public class NativeCache {
     private final RedisClient redisClient;
     private final Cache<String, Object> cache;
     // 操作
-    private CacheFrontend<String, Object> frontend;
+    private CacheFrontend<String, Object> clientCache;
     StatefulRedisConnection<String, Object> redisConnection;
 
     public NativeCache(RedisClient redisClient, Cache<String, Object> cache) {
@@ -26,11 +26,11 @@ public class NativeCache {
     }
 
     public Object get(String key) {
-        return frontend.get(key);
+        return clientCache.get(key);
     }
 
     public Object get(String key, Callable<Object> valueLoader) {
-        return frontend.get(key, valueLoader);
+        return clientCache.get(key, valueLoader);
     }
 
     public Cache<String,Object> cache() {
@@ -45,7 +45,8 @@ public class NativeCache {
         }
         try {
             redisConnection = redisClient.connect(new MyRedisCodec());
-            this.frontend = MyClientCacheFrontend.enable(new NativeCacheAccessor(cache), redisConnection, TrackingArgs.Builder.enabled());
+            // 开启本地缓存与远程缓存的连接
+            this.clientCache = MyClientCache.enable(new NativeCacheAccessor(cache), redisConnection, TrackingArgs.Builder.enabled());
             log.info("contention had been reconnect....");
         } catch (Exception e) {
             log.error("connection had been disconnected,waiting reconnect....");
