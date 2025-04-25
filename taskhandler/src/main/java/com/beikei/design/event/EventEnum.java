@@ -1,10 +1,11 @@
-package org.beikei.design.event;
+package com.beikei.design.event;
 
 import lombok.Getter;
 
 @Getter
 public enum EventEnum {
 
+    NULL(""),
     RESTAURANT_UPGRADE("res_up_event"),
     ITEM_INCR("item_incr_event"),
     ITEM_DECR("item_decr_event"),

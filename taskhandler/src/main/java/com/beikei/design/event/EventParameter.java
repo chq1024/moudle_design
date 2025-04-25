@@ -1,4 +1,4 @@
-package org.beikei.design.event;
+package com.beikei.design.event;
 
 import lombok.Builder;
 

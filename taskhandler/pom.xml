@@ -4,11 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.beikei.design</groupId>
+        <groupId>com.beikei.design</groupId>
         <artifactId>moudle</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>taskhandler</artifactId>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+        </dependency>
+    </dependencies>
 </project>
