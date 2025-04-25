@@ -5,16 +5,12 @@ import lombok.Getter;
 @Getter
 public enum EventEnum {
 
-    NULL(""),
-    RESTAURANT_UPGRADE("res_up_event"),
-    ITEM_INCR("item_incr_event"),
-    ITEM_DECR("item_decr_event"),
-    BATTLE_WIN("battle_win_event"),
-    BATTLE_LOSE("battle_lose_event"),
-    TASK_COMPLETE("task_complete_event"),
+    NULL,
+    RESTAURANT_UPGRADE,
+    ITEM_INCR,
+    ITEM_DECR,
+    BATTLE_WIN,
+    BATTLE_LOSE,
+    TASK_COMPLETE,
     ;
-    private final String name;
-    EventEnum(String name) {
-        this.name = name;
-    }
 }
