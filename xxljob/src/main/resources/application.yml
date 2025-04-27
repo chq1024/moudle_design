@@ -1,0 +1,21 @@
+server:
+  port: 20101
+
+spring:
+  application:
+    name: xxljob-mod
+
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:20100/xxl-job-admin
+      accessToken: beikei
+      timeout: 3
+    executor:
+      appname: xxljob-mod
+      address:
+      ip:
+      port: 9999
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 3
+
