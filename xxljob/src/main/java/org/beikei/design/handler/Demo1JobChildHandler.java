@@ -1,11 +1,9 @@
 package org.beikei.design.handler;
 
 import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import com.xxl.job.core.handler.IJobHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.beikei.design.config.JobHandler;
-import org.beikei.design.util.SpringUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

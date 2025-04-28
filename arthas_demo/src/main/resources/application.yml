@@ -1,0 +1,9 @@
+server:
+  port: 20102
+
+spring:
+  application:
+    name: arthas_demo
+
+arthas:
+  tunnel-server: ws://127.0.0.1:7777/ws

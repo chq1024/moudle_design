@@ -17,6 +17,7 @@
         <module>xxljob</module>
         <module>taskhandler</module>
         <module>cache</module>
+        <module>arthas_demo</module>
     </modules>
 
     <properties>
