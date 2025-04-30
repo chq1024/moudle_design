@@ -1,4 +1,4 @@
-package org.beikei.design.handler;
+package org.beikei.design.design.handler;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;

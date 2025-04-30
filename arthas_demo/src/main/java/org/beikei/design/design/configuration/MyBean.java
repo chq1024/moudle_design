@@ -1,4 +1,4 @@
-package org.beikei.design.configuration;
+package org.beikei.design.design.configuration;
 
 public class MyBean {
 

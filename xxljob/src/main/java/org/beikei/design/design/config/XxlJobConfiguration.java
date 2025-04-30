@@ -1,4 +1,4 @@
-package org.beikei.design.config;
+package org.beikei.design.design.config;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;

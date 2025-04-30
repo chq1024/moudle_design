@@ -1,10 +1,10 @@
-package org.beikei.design;
+package org.beikei.design.design;
 
 import com.xxl.job.core.executor.XxlJobExecutor;
 import com.xxl.job.core.handler.IJobHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.beikei.design.config.JobHandler;
-import org.beikei.design.util.SpringUtils;
+import org.beikei.design.design.config.JobHandler;
+import org.beikei.design.design.util.SpringUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ConfigurationBuilder;

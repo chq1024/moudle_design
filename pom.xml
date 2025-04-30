@@ -18,6 +18,7 @@
         <module>taskhandler</module>
         <module>cache</module>
         <module>arthas_demo</module>
+        <module>gamelog</module>
     </modules>
 
     <properties>
