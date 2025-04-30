@@ -24,12 +24,7 @@ public abstract class MqConsumer {
     public void exec() {
         while (true) {
             try {
-                Gamelog message = queue().poll(3, TimeUnit.SECONDS);
-                if (message == null) {
-                    log.warn("{}进入休眠...",Thread.currentThread().getName());
-                    Thread.sleep(1000);
-                    continue;
-                }
+                Gamelog message = queue().take();
                 handler().accept(message);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

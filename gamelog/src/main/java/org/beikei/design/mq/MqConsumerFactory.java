@@ -1,8 +1,6 @@
 package org.beikei.design.mq;
 
 import org.beikei.design.domain.Gamelog;
-import org.beikei.design.enums.GamelogEnum;
-import org.beikei.design.enums.GamelogParentEnum;
 import org.beikei.design.utils.ThreadHelper;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -11,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
