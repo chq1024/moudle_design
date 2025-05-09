@@ -15,13 +15,14 @@ import javax.annotation.Resource;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootApplication
 @EnableDynamicTp
 @RestController
 public class DynamicTpMain {
     public static void main(String[] args) {
-        SpringApplication.run(DynamicTpMain.class,args);
+        SpringApplication.run(DynamicTpMain.class, args);
     }
 
 
@@ -31,24 +32,21 @@ public class DynamicTpMain {
 
     @GetMapping("/exec")
     public void dynamicExec() {
-
+        AtomicInteger meAtomic = new AtomicInteger(1);
+        AtomicInteger bkAtomic = new AtomicInteger(1);
         ThreadPoolExecutorAdapter myThreadPool = (ThreadPoolExecutorAdapter) DtpRegistry.getExecutor("myThreadPool");
-        for (int i = 1; i < 10 ; i++) {
-            int param = i;
+        for (; ;) {
             try {
-                myThreadPool.getOriginal().execute(()->{
-                    System.out.println(Thread.currentThread().getName() + "ME执行：" + (param));
+                myThreadPool.getOriginal().execute(() -> {
+                    System.out.println(Thread.currentThread().getName() + "ME执行：" + meAtomic.getAndIncrement());
                 });
-            }catch (RejectedExecutionException e) {
-                System.out.println("丢弃：" + param);
+            } catch (RejectedExecutionException e) {
+                System.out.println("丢弃：" + meAtomic.getAndIncrement());
             }
-
-        }
-        for (int i = 1; i < 10 ; i++) {
-            int param = i;
-            bkThreadPool.execute(()->{
-                System.out.println(Thread.currentThread().getName() + "执行：" + (param));
+            bkThreadPool.execute(() -> {
+                System.out.println(Thread.currentThread().getName() + "执行：" + bkAtomic.getAndIncrement());
             });
         }
+
     }
 }

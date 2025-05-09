@@ -16,9 +16,11 @@ public class MyThreadPoolConfiguration {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(0);
         executor.setMaxPoolSize(5);
-        executor.setQueueCapacity(0);
         executor.setThreadNamePrefix("bk-me-");
         executor.setAllowCoreThreadTimeOut(false);
+//        executor.setQueueCapacity(0);
+//        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
+        executor.setQueueCapacity(100);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         return executor;
     }
