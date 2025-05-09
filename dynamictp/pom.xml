@@ -10,18 +10,23 @@
     </parent>
 
     <groupId>org.beikei.design</groupId>
-    <artifactId>gamelog</artifactId>
+    <artifactId>dynamictp</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.10.2</version>
+            <groupId>org.dromara.dynamictp</groupId>
+            <artifactId>dynamic-tp-spring-cloud-starter-nacos</artifactId>
+            <version>1.2.1</version>
         </dependency>
         <dependency>
-            <groupId>com.taobao.arthas</groupId>
-            <artifactId>arthas-spring-boot-starter</artifactId>
-            <version>4.0.5</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>2021.0.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <version>4.2.1</version>
         </dependency>
     </dependencies>
 </project>

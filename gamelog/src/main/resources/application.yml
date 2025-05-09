@@ -3,3 +3,6 @@ server:
 spring:
   application:
     name: gamelog
+
+arthas:
+  tunnel-server: ws://127.0.0.1:7777/ws

@@ -1,11 +1,10 @@
 package org.beikei.design;
 
 import org.beikei.design.client.GamelogClient;
-import org.beikei.design.enums.GamelogEnum;
-import org.beikei.design.enums.GamelogParentEnum;
-import org.beikei.design.mq.MqConsumer;
 import org.beikei.design.mq.MqConsumerFactory;
 import org.beikei.design.utils.DateHelper;
+import org.beikei.design.enums.GamelogEnum;
+import org.beikei.design.enums.GamelogParentEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static javax.swing.UIManager.put;
 
 @SpringBootApplication
 @RestController

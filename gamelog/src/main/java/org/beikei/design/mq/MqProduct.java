@@ -1,12 +1,11 @@
 package org.beikei.design.mq;
 
-import org.beikei.design.mq.MqConsumer;
-import org.beikei.design.domain.Gamelog;
-import org.beikei.design.enums.GamelogEnum;
 import org.beikei.design.utils.DateHelper;
 import org.beikei.design.utils.JsonHelper;
 import org.beikei.design.utils.SessionHelper;
 import org.beikei.design.utils.ThreadHelper;
+import org.beikei.design.domain.Gamelog;
+import org.beikei.design.enums.GamelogEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package org.beikei.design.design.util;
+package org.beikei.design.util;
 
 import org.springframework.context.ApplicationContext;
 

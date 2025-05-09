@@ -1,0 +1,6 @@
+server:
+  port: 20104
+
+spring:
+  application:
+    name: dynamictp

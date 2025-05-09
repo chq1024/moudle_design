@@ -1,4 +1,4 @@
-package org.beikei.design.design.config;
+package org.beikei.design.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

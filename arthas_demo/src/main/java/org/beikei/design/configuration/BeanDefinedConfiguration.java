@@ -1,4 +1,4 @@
-package org.beikei.design.design.configuration;
+package org.beikei.design.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -19,6 +19,7 @@
         <module>cache</module>
         <module>arthas_demo</module>
         <module>gamelog</module>
+        <module>dynamictp</module>
     </modules>
 
     <properties>
